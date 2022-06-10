@@ -1,6 +1,5 @@
 package com.secondworld.singleuser.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.secondworld.core.base.BaseResult
@@ -12,7 +11,6 @@ import com.secondworld.singleuser.domain.useCase.SingleUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
-
 
 @HiltViewModel
 class SingleUserViewModel @Inject constructor(
@@ -36,21 +34,30 @@ class SingleUserViewModel @Inject constructor(
                 }
                 .collect { result ->
                     when (result) {
-                        is BaseResult.Success -> _state.emit(SingleUserState.Success(result.data))
+                        is BaseResult.Success -> success(result.data)
                         is BaseResult.Error -> {
-                            if (result.err.code != 0) {
-                                _state.emit(SingleUserState.Error("${result.err.message} [${result.err.code}]"))
-                            } else {
-                                _state.emit(SingleUserState.NoInternet(resourceProvider.string(R.string.no_internet)))
-                            }
+                            if (result.err.code != 0) error("${result.err.message} [${result.err.code}]")
+                            else noInternetError(resourceProvider.string(R.string.no_internet))
                         }
                     }
                 }
         }
     }
 
+    private suspend fun success(data : SingleUserDomain) {
+        _state.emit(SingleUserState.Success(data))
+    }
+
     private suspend fun loading() {
         _state.emit(SingleUserState.Loading)
+    }
+
+    private suspend fun error(message: String) {
+        _state.emit(SingleUserState.Error(message))
+    }
+
+    private suspend fun noInternetError(message: String) {
+        _state.emit(SingleUserState.NoInternet(message))
     }
 }
 
