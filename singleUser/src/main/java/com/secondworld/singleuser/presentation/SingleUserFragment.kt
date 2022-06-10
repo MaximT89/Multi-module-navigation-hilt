@@ -9,8 +9,6 @@ import com.secondworld.core.base.*
 import com.secondworld.singleuser.databinding.FragmentSingleUserBinding
 import com.secondworld.singleuser.domain.entity.SingleUserDomain
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SingleUserFragment :
