@@ -21,22 +21,19 @@ class SingleUserViewModel @Inject constructor(
     private val resourceProvider: ResourceProvider.Base
 ) : ViewModel() {
 
+    private var _state: MutableSharedFlow<SingleUserState> = MutableSharedFlow()
+    val state = _state.asSharedFlow()
+
     init {
         fetchData()
     }
 
-    private var _state: MutableSharedFlow<SingleUserState> = MutableSharedFlow()
-    val state: SharedFlow<SingleUserState> = _state.asSharedFlow()
-
     fun fetchData() {
-
-
-
         dispatchers.launchBackground(viewModelScope) {
-
-            loading()
-
             useCase.execute()
+                .onStart {
+                    loading()
+                }
                 .collect { result ->
                     when (result) {
                         is BaseResult.Success -> _state.emit(SingleUserState.Success(result.data))
