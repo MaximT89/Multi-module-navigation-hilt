@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/listUsersFragment">
+
+    <fragment
+        android:id="@+id/listUsersFragment"
+        android:name="com.secondworld.listusers.presentation.ListUsersFragment"
+        android:label="ListUsersFragment">
+        <action
+            android:id="@+id/action_listUsersFragment_to_singleUserFragment"
+            app:destination="@id/singleUserFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/singleUserFragment"
+        android:name="com.secondworld.singleuser.presentation.SingleUserFragment"
+        android:label="SingleUserFragment" >
+
+    </fragment>
+
+
+</navigation>
