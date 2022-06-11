@@ -2,6 +2,8 @@ package com.secondworld.singleuser.presentation
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -47,7 +49,7 @@ class SingleUserFragment :
         }
     }
 
-    private fun updateContent(data: SingleUserDomain) = with(binding){
+    private fun updateContent(data: SingleUserDomain) = with(binding) {
         firstName.text = data.firstName
         lastName.text = data.lastName
         email.text = data.email
@@ -87,6 +89,15 @@ class SingleUserFragment :
 
     private fun initView() = with(binding) {
         btnBack.setOnClickListener {
+            setFragmentResult("data", bundleOf(
+                "entity" to SingleUserDomain(
+                    "Ivanov",
+                    1,
+                    "bebebe",
+                    "Max",
+                    "max@gmail.ru"
+                )
+            ))
             findNavController().navigateUp()
         }
 

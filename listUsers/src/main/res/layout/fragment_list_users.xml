@@ -23,4 +23,13 @@
         android:layout_centerInParent="true"
         android:text="@string/go_detail_user"/>
 
+    <TextView
+        android:id="@+id/last_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/btn_go_detail"
+        android:text="@string/list_fragment" />
+
 </RelativeLayout>

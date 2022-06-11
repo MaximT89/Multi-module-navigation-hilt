@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -37,6 +38,8 @@ dependencies {
 
     implementation project(":core")
     implementation project(":navigation")
+    implementation project(":singleUser")
+
 
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navigationVersion"

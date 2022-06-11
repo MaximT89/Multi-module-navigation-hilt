@@ -17,6 +17,9 @@
         android:name="com.secondworld.singleuser.presentation.SingleUserFragment"
         android:label="SingleUserFragment" >
 
+        <action
+            android:id="@+id/action_singleUserFragment_to_listUsersFragment"
+            app:destination="@id/listUsersFragment" />
     </fragment>
 
 
