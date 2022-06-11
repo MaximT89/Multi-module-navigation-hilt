@@ -2,6 +2,7 @@ package com.secondworld.listusers.presentation
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -23,17 +24,13 @@ class ListUsersFragment : BaseFragment<FragmentListUsersBinding>(FragmentListUse
     }
 
     private fun getInfo() {
-        setFragmentResultListener("data") { _, bundle ->
-            val entity = bundle.getParcelable<SingleUserDomain>("entity")
-            entity?.let {
-                binding.lastName.text = it.lastName
-            }
-        }
+
     }
 
     private fun initView() = with(binding) {
         btnGoDetail.setOnClickListener {
-            findNavController().navigate(viewModel.navigateToDetail())
+            val bundle = bundleOf("s1" to "Max")
+            findNavController().navigate(viewModel.navigateToDetail(), bundle)
         }
     }
 }

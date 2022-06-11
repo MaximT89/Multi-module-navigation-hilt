@@ -25,6 +25,11 @@ class SingleUserFragment :
 
         initView()
         initData()
+        getInfo()
+    }
+
+    private fun getInfo() {
+        binding.title.text = arguments?.getString("s1")
     }
 
     private fun initData() {
@@ -37,10 +42,12 @@ class SingleUserFragment :
                         updateContent(result.data)
                     }
                     is SingleUserState.Error -> {
+                        isLoading(false)
                         isError(true)
                         errorMessage(result.message)
                     }
                     is SingleUserState.NoInternet -> {
+                        isLoading(false)
                         isError(true)
                         errorMessage(result.message)
                     }
@@ -89,15 +96,6 @@ class SingleUserFragment :
 
     private fun initView() = with(binding) {
         btnBack.setOnClickListener {
-            setFragmentResult("data", bundleOf(
-                "entity" to SingleUserDomain(
-                    "Ivanov",
-                    1,
-                    "bebebe",
-                    "Max",
-                    "max@gmail.ru"
-                )
-            ))
             findNavController().navigateUp()
         }
 
