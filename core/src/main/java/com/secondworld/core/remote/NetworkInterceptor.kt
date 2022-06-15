@@ -10,28 +10,43 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
 
-class NetworkInterceptor @Inject constructor(@ApplicationContext private val applicationContext: Context) : Interceptor {
+class NetworkInterceptor @Inject constructor(@ApplicationContext private val applicationContext: Context) :
+    Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        if(!isConnected()){
+        if (!isConnected()) {
             throw NoInternetConnectionException()
         }
         val newRequest = chain.request().newBuilder().build()
         return chain.proceed(newRequest)
     }
 
-    private fun isConnected() : Boolean {
-        val connectivityManager = applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    private fun isConnected(): Boolean {
+        var result = false
+        val connectivityManager =
+            applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val nw = connectivityManager.activeNetwork ?: return false
-            val actNw = connectivityManager.getNetworkCapabilities(nw) ?: return false
-            return when {
-                actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-                actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            val networkCapabilities = connectivityManager.activeNetwork ?: return false
+            val activeNetwork =
+                connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
+            result = when {
+                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
                 else -> false
             }
         } else {
-            val nwInfo = connectivityManager.activeNetworkInfo ?: return false
-            return nwInfo.isConnected
+            connectivityManager.run {
+                connectivityManager.activeNetworkInfo?.run {
+                    result = when (type) {
+                        ConnectivityManager.TYPE_WIFI -> true
+                        ConnectivityManager.TYPE_MOBILE -> true
+                        ConnectivityManager.TYPE_ETHERNET -> true
+                        else -> false
+                    }
+                }
+            }
         }
+
+        return result
     }
 }

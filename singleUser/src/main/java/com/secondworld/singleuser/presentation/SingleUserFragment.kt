@@ -33,10 +33,12 @@ class SingleUserFragment :
                         updateContent(result.data)
                     }
                     is SingleUserState.Error -> {
+                        isLoading(false)
                         isError(true)
                         errorMessage(result.message)
                     }
                     is SingleUserState.NoInternet -> {
+                        isLoading(false)
                         isError(true)
                         errorMessage(result.message)
                     }
@@ -79,7 +81,6 @@ class SingleUserFragment :
                 progressBar.show()
                 isError(false)
             }
-
         }
     }
 

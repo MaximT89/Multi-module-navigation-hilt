@@ -15,8 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SingleUserViewModel @Inject constructor(
     private val useCase: SingleUserUseCase,
-    private val dispatchers: Dispatchers.Base,
-    private val resourceProvider: ResourceProvider.Base
+    private val dispatchers: Dispatchers,
+    private val resourceProvider: ResourceProvider
 ) : ViewModel() {
 
     private var _state: MutableSharedFlow<SingleUserState> = MutableSharedFlow()
@@ -31,6 +31,9 @@ class SingleUserViewModel @Inject constructor(
             useCase.execute()
                 .onStart {
                     loading()
+                }
+                .catch {
+
                 }
                 .collect { result ->
                     when (result) {
