@@ -13,8 +13,8 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Multi module navigation hilt"
-include ':app'
-include ':core'
-include ':navigation'
-include ':singleUser'
-include ':listUsers'
+include(":app")
+include(":core")
+include(":navigation")
+include(":singleUser")
+include(":listUsers")
