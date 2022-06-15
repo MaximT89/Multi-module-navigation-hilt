@@ -52,7 +52,4 @@ object Dependencies {
         const val android = "com.google.dagger:hilt-android:$hiltVersion"
         const val compiler = "com.google.dagger:hilt-compiler:$hiltVersion"
     }
-
-
-
 }
