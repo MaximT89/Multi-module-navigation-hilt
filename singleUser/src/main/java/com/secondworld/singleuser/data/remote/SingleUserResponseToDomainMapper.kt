@@ -6,7 +6,7 @@ import com.secondworld.singleuser.domain.entity.SingleUserDomain
 import javax.inject.Inject
 
 class SingleUserResponseToDomainMapper @Inject constructor():
-    Mapper<SingleUserResponse, SingleUserDomain> {
+    Mapper.Data<SingleUserResponse, SingleUserDomain> {
 
     override fun map(data: SingleUserResponse): SingleUserDomain {
         return SingleUserDomain(
@@ -18,3 +18,4 @@ class SingleUserResponseToDomainMapper @Inject constructor():
         )
     }
 }
+

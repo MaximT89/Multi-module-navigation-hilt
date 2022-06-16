@@ -1,6 +1,8 @@
 package com.secondworld.core
 
-interface Mapper<T, R> {
+interface Mapper {
 
-    fun map(data : T) : R
+    interface Data<T, R> : Mapper {
+        fun map(data: T): R
+    }
 }
